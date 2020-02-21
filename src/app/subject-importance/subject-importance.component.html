@@ -1,0 +1,25 @@
+<div class="bg-light">
+    <a (click)="togglePercentageSettings()">Settings</a>
+    
+    <div class="container"  *ngIf="subjectSettingsIsVisible">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="text-center">Subject percentages:</h4>
+            </div>
+            <div class="panel-body d-flex justify-content-around">
+                <div *ngFor="let subject of subjects">
+                    <span class="text-capitalize">{{ subject.name }}: {{ subject.value }}</span>
+                    <input 
+                        type="range"
+                        class="custom-range"
+                        min="0"
+                        max="100"
+                        step="1"
+                        [value]="subject.value"
+                        (input)="onValueChange(subject.name, $event.target.valueAsNumber)"
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
