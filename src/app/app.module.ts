@@ -4,12 +4,16 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { SubjectImportanceComponent } from './subject-importance/subject-importance.component';
+import { StudentComponent } from './student/student.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SubjectImportanceComponent
+    SubjectImportanceComponent,
+    StudentComponent,
+    StudentDetailsComponent
   ],
   imports: [
     BrowserModule

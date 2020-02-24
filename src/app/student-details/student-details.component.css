@@ -1,0 +1,35 @@
+span {
+    display: inline-block;
+    min-width: 60px;
+}
+
+
+input[type="number"] {
+    margin: 0 1rem 0 1rem;
+    border: 2px solid #BBB;
+    border-color: #BBB #ECECEC #ECECEC #BBB;
+    padding: .1rem;
+}
+
+/* Spin Buttons modified */
+input[type="number"].mod::-webkit-outer-spin-button, 
+input[type="number"].mod::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    background: #FFF url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=) no-repeat center center;
+    width: 1.25em;
+    border-left: 1px solid #BBB;
+    opacity: .5; /* shows Spin Buttons per default (Chrome >= 39) */
+}
+
+::placeholder {
+    color: brown;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: red;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: red;
+}

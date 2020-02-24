@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-subject-importance',
@@ -6,19 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./subject-importance.component.css']
 })
 export class SubjectImportanceComponent implements OnInit {
-  subjectSettingsIsVisible = true;
+  @Output() importanceStats = new EventEmitter<any>();
   subjects = [
     {
       name: 'math',
-      value: 33
+      importance: 30
     },
     {
       name: 'english',
-      value: 33
+      importance: 30
     },
     {
       name: 'biology',
-      value: 33
+      importance: 40
     }
   ];
   
@@ -26,21 +26,21 @@ export class SubjectImportanceComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.subjects.forEach((subject) => {
-      subject.value = Math.round(10000 / this.subjects.length) / 100;
-    })
+    // this.subjects.forEach((subject: {name: string, importance: number}) => {
+    //   subject.importance = Math.round(10000 / this.subjects.length) / 100;
+    // });
+    this.importanceStats.emit(this.subjects);
   }
 
-  onValueChange(name, value) {
-    this.subjects.forEach((subject) => {
+  onValueChange(name: string, value: number) {
+    this.subjects.forEach((subject: {name: string, importance: number}) => {
       if (subject.name === name) {
-        subject.value = value;
+        subject.importance = value;
+      } else {
+        subject.importance = Math.round((100 - value) / (this.subjects.length - 1) * 100) / 100;
       }
     })
+   this.importanceStats.emit(this.subjects);
   }
-
-  togglePercentageSettings() {
-    this.subjectSettingsIsVisible = !this.subjectSettingsIsVisible;
-  }
-
+  
 }
