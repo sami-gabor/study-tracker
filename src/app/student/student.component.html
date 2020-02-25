@@ -4,7 +4,7 @@
       <h5 class="card-title">{{ student.name }}</h5>
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <div class=" d-flex justify-content-between">
-            <h6 class="d-flex align-items-center">Score: {{ student.score }}</h6>
+            <h6 class="d-flex align-items-center" appScoreHighlight [score]="student.score">Score: {{ student.score }}</h6>
             <a href="#" class="btn btn-primary" (click)="onClickDetails(student)">Details</a>
       </div>
     </div>

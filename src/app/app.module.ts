@@ -7,6 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { SubjectImportanceComponent } from './subject-importance/subject-importance.component';
 import { StudentComponent } from './student/student.component';
 import { StudentDetailsComponent } from './student-details/student-details.component';
+import { ScoreHighlightDirective } from './score-highlight.directive';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
     HeaderComponent,
     SubjectImportanceComponent,
     StudentComponent,
-    StudentDetailsComponent
+    StudentDetailsComponent,
+    ScoreHighlightDirective
   ],
   imports: [
     BrowserModule,
