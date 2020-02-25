@@ -69,8 +69,7 @@ export class AppComponent {
   }
 
   private calculateStudentScore(grades, percentages) {
-    const score = (grades.math * percentages.math + grades.english * percentages.english + grades.biology * percentages.biology) / 3
-    return Math.round(score);
+    return (grades.math * percentages.math + grades.english * percentages.english + grades.biology * percentages.biology) / 10;
   }
 
   private updateStudentsScore() {
@@ -80,8 +79,6 @@ export class AppComponent {
   }
 
   onImportanceStats(stats) {
-    console.log(stats);
-
     stats.forEach(({ name, importance }) => {
       this.importancePercentages[name] = importance;
     });
