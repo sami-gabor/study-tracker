@@ -15,7 +15,6 @@ export class StudentComponent implements OnInit {
   ngOnInit(): void {} 
 
   onClickDetails(student) {
-    console.log('emited: ', student);
     this.detailsClicked.emit(student);
   }
 

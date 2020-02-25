@@ -81,15 +81,11 @@ export class AppComponent {
   }
 
   onDetailsClicked(student) {
-    console.log('received: ', student);
-    
     this.detailsAreVisible = true;
     this.currentStudent = student;
   }
 
   onCancelDetails() {
-    console.log('cancel details!');
-    
     this.detailsAreVisible = false;
   }
 }

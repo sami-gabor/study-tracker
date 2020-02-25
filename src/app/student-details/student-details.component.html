@@ -5,15 +5,15 @@
             <h5 class="card-title">Name: {{ currentStudent.name }}</h5>
             <input type="text" class="form-control" placeholder="Change name">
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <div class="m-1" *ngFor="let subject of ['math', 'english', 'biology']">
-                <span class="text-capitalize">{{ subject }}: </span>
+            <div class="m-1" *ngFor="let grade of currentStudentGrades">
+                <span class="text-capitalize">{{ grade[0] }}: </span>
                 <input 
                     type="number"
                     class="mod"
                     min="0"
                     max="10"
                     step="1"
-                    value="5"
+                    [value]="grade[1]"
                 >
             </div>
             <div class="d-flex justify-content-around mt-4">

@@ -39,8 +39,9 @@ export class SubjectImportanceComponent implements OnInit {
       } else {
         subject.importance = Math.round((100 - value) / (this.subjects.length - 1) * 100) / 100;
       }
-    })
-   this.importanceStats.emit(this.subjects);
+    });
+
+    this.importanceStats.emit(this.subjects);
   }
   
 }

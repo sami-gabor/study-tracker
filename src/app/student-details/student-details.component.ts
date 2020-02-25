@@ -8,22 +8,20 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class StudentDetailsComponent implements OnInit {
   @Output() cancelDetails = new EventEmitter<void>();
   @Input() currentStudent: any;
+  currentStudentGrades = [];
+
   constructor() { }
 
   ngOnInit(): void {
-    console.log(123, this.currentStudent);
-    
+    this.currentStudentGrades = Object.entries(this.currentStudent.grades)
   }
 
   onClickSaveDetails() {
     console.log('emit save details');
-    
-    // TODO: save details to db
+    // TODO: save details
   }
 
   onClickCancelDetails() {
-    console.log('emit cancel details');
-    
     this.cancelDetails.emit();
   }
 
