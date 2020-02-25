@@ -26,9 +26,14 @@ export class SubjectImportanceComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // this.subjects.forEach((subject: {name: string, importance: number}) => {
-    //   subject.importance = Math.round(10000 / this.subjects.length) / 100;
-    // });
+    const sumPercentages = this.subjects.reduce((accumulator, current) =>  accumulator + current.importance , 0);
+    
+    if (sumPercentages > 100) {
+      this.subjects.forEach((subject: {name: string, importance: number}) => {
+        subject.importance = Math.round(10000 / this.subjects.length) / 100;
+      });
+    }
+
     this.importanceStats.emit(this.subjects);
   }
 
