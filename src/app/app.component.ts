@@ -63,7 +63,7 @@ export class AppComponent {
     }
   ];
 
-  
+
   onToggleSettings() {
     this.settingsAreVisible = !this.settingsAreVisible;
   }
@@ -81,7 +81,7 @@ export class AppComponent {
 
   onImportanceStats(stats) {
     console.log(stats);
-    
+
     stats.forEach(({ name, importance }) => {
       this.importancePercentages[name] = importance;
     });
