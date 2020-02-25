@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appScoreHighlight]'
@@ -6,7 +6,7 @@ import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 export class ScoreHighlightDirective implements OnChanges {
   @Input() score : number;
 
-  constructor(private el: ElementRef) { }
+  constructor(private elRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnChanges() {
     let customColor: string;
@@ -19,7 +19,7 @@ export class ScoreHighlightDirective implements OnChanges {
       customColor = 'red';
     }
     
-    this.el.nativeElement.style.color = customColor;
+    this.renderer.setStyle(this.elRef.nativeElement, 'color', customColor);
   }
 
 }
