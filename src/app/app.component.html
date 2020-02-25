@@ -8,7 +8,8 @@
 
 
 <app-student-details 
-    *ngIf="detailsAreVisible"
+    *ngIf="currentStudent"
+    (saveDetails)="onSaveDetails($event)"
     (cancelDetails)="onCancelDetails()"
     [currentStudent]="currentStudent"
 ></app-student-details>

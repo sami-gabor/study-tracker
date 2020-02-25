@@ -6,6 +6,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
+  @Output() saveDetails = new EventEmitter<any>();
   @Output() cancelDetails = new EventEmitter<void>();
   @Input() currentStudent: any;
   currentStudentGrades = [];
@@ -13,12 +14,11 @@ export class StudentDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.currentStudentGrades = Object.entries(this.currentStudent.grades)
+    this.currentStudentGrades = Object.entries(this.currentStudent.grades);
   }
 
   onClickSaveDetails() {
-    console.log('emit save details');
-    // TODO: save details
+    this.saveDetails.emit(this.currentStudent);
   }
 
   onClickCancelDetails() {
