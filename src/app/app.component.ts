@@ -73,7 +73,7 @@ export class AppComponent {
     return Math.round(score);
   }
 
-  private updateStudentScore() {
+  private updateStudentsScore() {
     this.students.forEach((student) => {
       student.score = this.calculateStudentScore(student.grades, this.importancePercentages);
     });
@@ -86,7 +86,7 @@ export class AppComponent {
       this.importancePercentages[name] = importance;
     });
 
-    this.updateStudentScore();
+    this.updateStudentsScore();
   }
 
   onDetailsClicked(student) {
@@ -100,9 +100,8 @@ export class AppComponent {
       }
     });
 
-    // this.detailsAreVisible = false;
     this.currentStudent = null;
-    this.updateStudentScore();
+    this.updateStudentsScore();
   }
 
   onCancelDetails() {
