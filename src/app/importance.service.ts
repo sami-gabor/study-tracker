@@ -3,9 +3,9 @@ import { Injectable } from "@angular/core";
 @Injectable({ providedIn: 'root' })
 export class ImportanceService {
   percentages = {
-    math: 33,
-    english: 33,
-    biology: 33
+    math: 30,
+    english: 30,
+    biology: 40
   }
 
   updateImportance(name: string, value: number) {

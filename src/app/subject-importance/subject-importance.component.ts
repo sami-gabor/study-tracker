@@ -28,7 +28,7 @@ export class SubjectImportanceComponent implements OnInit {
       if (subject.name === name) {
         subject.importance = value;
       } else {
-        subject.importance = (100 - value) / 2;
+        subject.importance = (100 - value) / (Object.keys(this.percentages).length - 1);
       }
     });
 
