@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { StudentsSetvice } from '../students.service';
 
 @Component({
   selector: 'app-student-details',
@@ -6,19 +7,20 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
-  @Output() saveDetails = new EventEmitter<any>();
   @Output() cancelDetails = new EventEmitter<void>();
   @Input() currentStudent: any;
   currentStudentGrades = [];
 
-  constructor() { }
+  constructor(private studentsService: StudentsSetvice) { }
 
   ngOnInit(): void {
     this.currentStudentGrades = Object.entries(this.currentStudent.grades);
   }
 
   onClickSaveDetails() {
-    this.saveDetails.emit(this.currentStudent);
+    this.studentsService.saveStudentDetails(this.currentStudent);
+    this.studentsService.updateStudentsScore();
+    this.cancelDetails.emit();
   }
 
   onClickCancelDetails() {

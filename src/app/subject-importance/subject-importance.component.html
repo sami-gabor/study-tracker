@@ -14,7 +14,7 @@
                         max="100"
                         step="1"
                         [value]="subject.importance"
-                        (input)="onValueChange(subject.name, $event.target.valueAsNumber)"
+                        (input)="onChangeImportancePercentage(subject.name, $event.target.valueAsNumber)"
                     >
                 </div>
             </div>

@@ -8,6 +8,7 @@ import { SubjectImportanceComponent } from './subject-importance/subject-importa
 import { StudentComponent } from './student/student.component';
 import { StudentDetailsComponent } from './student-details/student-details.component';
 import { ScoreHighlightDirective } from './score-highlight.directive';
+import { StudentsComponent } from './students/students.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ScoreHighlightDirective } from './score-highlight.directive';
     SubjectImportanceComponent,
     StudentComponent,
     StudentDetailsComponent,
-    ScoreHighlightDirective
+    ScoreHighlightDirective,
+    StudentsComponent
   ],
   imports: [
     BrowserModule,

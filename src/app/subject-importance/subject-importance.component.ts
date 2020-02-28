@@ -1,4 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ImportanceService } from '../importance.service';
+import { StudentsSetvice } from '../students.service';
 
 @Component({
   selector: 'app-subject-importance',
@@ -6,49 +8,32 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./subject-importance.component.css']
 })
 export class SubjectImportanceComponent implements OnInit {
-  @Output() importanceStats = new EventEmitter<any>();
-  subjects = [
-    {
-      name: 'math',
-      importance: 30
-    },
-    {
-      name: 'english',
-      importance: 30
-    },
-    {
-      name: 'biology',
-      importance: 40
-    }
-  ];
+  subjects: { name: string, importance: number }[] = [];
+  percentages: { math: number, english: number, biology: number };
 
-
-  constructor() { }
+  constructor(private importanceService: ImportanceService, private studentsService: StudentsSetvice) { }
 
   ngOnInit(): void {
-    const sumPercentages = this.subjects.reduce((accumulator, current) => {
-      return accumulator + current.importance;
-    }, 0);
-
-    if (sumPercentages > 100) {
-      this.subjects.forEach((subject: { name: string, importance: number }) => {
-        subject.importance = Math.round(10000 / this.subjects.length) / 100;
-      });
+    this.percentages = this.importanceService.percentages;
+    
+    for (let item in this.percentages) {
+      this.subjects.push({ name: item, importance: this.percentages[item] })
     }
 
-    this.importanceStats.emit(this.subjects);
+
   }
 
-  onValueChange(name: string, value: number) {
-    this.subjects.forEach((subject: { name: string, importance: number }) => {
+  onChangeImportancePercentage(name: string, value: number) {
+    this.subjects.forEach((subject) => {
       if (subject.name === name) {
         subject.importance = value;
       } else {
-        subject.importance = Math.round((100 - value) / (this.subjects.length - 1) * 100) / 100;
+        subject.importance = (100 - value) / 2;
       }
     });
 
-    this.importanceStats.emit(this.subjects);
+    this.importanceService.updateImportance(name, value);
+    this.studentsService.updateStudentsScore();
   }
 
 }

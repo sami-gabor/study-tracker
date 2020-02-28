@@ -1,28 +1,11 @@
 <app-header (toggleSettings)="onToggleSettings()"></app-header>
 
-
-<app-subject-importance 
-    [ngClass]="settingsAreVisible ? '' : 'invisible'"
-    (importanceStats)="onImportanceStats($event)"
-></app-subject-importance>
-
+<app-subject-importance [ngClass]="settingsAreVisible ? '' : 'invisible'"></app-subject-importance>
 
 <app-student-details 
     *ngIf="currentStudent"
-    (saveDetails)="onSaveDetails($event)"
     (cancelDetails)="onCancelDetails()"
     [currentStudent]="currentStudent"
 ></app-student-details>
 
-
-<div class="container">
-    <div class="row d-flex justify-content-around">
-        <app-student 
-            *ngFor="let student of students"
-            [student]="student"
-            [importancePercentages]="importancePercentages"
-            [ngStyle]="{'order': -student.score}"
-            (detailsClicked)="onDetailsClicked($event)"
-        ></app-student>
-    </div>
-</div>
+<app-students (details)="onDetails($event)"></app-students>
