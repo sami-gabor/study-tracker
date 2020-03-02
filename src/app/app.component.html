@@ -1,6 +1,6 @@
 <app-header (toggleSettings)="onToggleSettings()"></app-header>
 
-<app-subject-importance [ngClass]="settingsAreVisible ? '' : 'invisible'"></app-subject-importance>
+<!-- <app-subject-importance [ngClass]="settingsAreVisible ? '' : 'invisible'"></app-subject-importance>
 
 <app-student-details 
     *ngIf="currentStudent"
@@ -8,4 +8,6 @@
     [currentStudent]="currentStudent"
 ></app-student-details>
 
-<app-students (details)="onDetails($event)"></app-students>
+<app-students (details)="onDetails($event)"></app-students> -->
+
+<router-outlet></router-outlet>

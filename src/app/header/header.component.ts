@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Output() toggleSettings = new EventEmitter<void>();
+  navbarOpen: boolean = false;
 
   constructor() { }
 
@@ -14,5 +15,9 @@ export class HeaderComponent implements OnInit {
 
   onClickSettings() {
     this.toggleSettings.emit();
+  }
+
+  onToggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 }
