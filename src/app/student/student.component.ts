@@ -1,17 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-interface Student {
-  name: string,
-  photo: string,
-  grades: {
-    math: number,
-    english: number,
-    biology: number
-  },
-  description: string,
-  score: number
-}
+import { Student } from '../../interfaces/student.interface';
+
 
 @Component({
   selector: 'app-student',
@@ -27,15 +18,8 @@ export class StudentComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onClickDetails(student: Student) {
-    this.router.navigate(
-      ['/add-student'],
-      {
-        queryParams: { currentStudent: JSON.stringify(student) },
-        fragment: 'edit'
-      }
-    );
-    this.detailsClicked.emit(student);
+  onClickDetails(studentId: string) {
+    this.router.navigate(['/students', studentId]);
   }
 
 }

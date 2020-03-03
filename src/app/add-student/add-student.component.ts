@@ -3,19 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StudentsSetvice } from '../students.service';
 import { ImportanceService } from '../importance.service';
 
+import { Student } from '../../interfaces/student.interface';
 
-interface Student {
-  id: string,
-  name: string,
-  photo: string,
-  grades: {
-    math: number,
-    english: number,
-    biology: number
-  },
-  description: string,
-  score: number
-}
 
 @Component({
   selector: 'app-add-student',
@@ -25,6 +14,7 @@ interface Student {
 export class AddStudentComponent implements OnInit {
   studentSubjects: string[]; // add interface
   newStudent: Student;
+  existingStudent: boolean = false;
 
   constructor(
     private importanceSercice: ImportanceService,
@@ -34,9 +24,11 @@ export class AddStudentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.route.snapshot.fragment === 'edit') {
-      const student = this.route.snapshot.queryParams.currentStudent;
-      this.newStudent = JSON.parse(student);
+    const id = this.route.snapshot.paramMap.get('id');
+    
+    if(id) {
+      this.existingStudent = true;
+      this.newStudent = this.studentsService.getStudent(id);
     } else {
       this.newStudent = {
         id: 'Enter id',
@@ -56,7 +48,7 @@ export class AddStudentComponent implements OnInit {
   }
 
   onSaveDetails() {
-    if(this.route.snapshot.fragment === 'edit') {
+    if(this.existingStudent) {
       this.studentsService.updateStudent(this.newStudent);
     } else {
       this.studentsService.addStudent(this.newStudent);

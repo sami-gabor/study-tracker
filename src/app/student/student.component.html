@@ -5,7 +5,7 @@
       <p class="card-text">{{ student.description }}</p>
       <div class=" d-flex justify-content-between">
             <h6 class="d-flex align-items-center" appScoreHighlight [score]="student.score">Score: {{ student.score }}</h6>
-            <button class="btn btn-primary" (click)="onClickDetails(student)">Details</button>
+            <button class="btn btn-primary" (click)="onClickDetails(student.id)">Details</button>
       </div>
     </div>
 </div>

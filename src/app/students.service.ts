@@ -90,6 +90,10 @@ export class StudentsSetvice implements OnInit {
     }
   }
 
+  getStudent(id: string) {
+    return this.students.filter((student) => student.id === id)[0];
+  }
+
   ngOnInit() { }
 
 }

@@ -16,6 +16,8 @@ import { AddStudentComponent } from './add-student/add-student.component';
 
 const appRoutes: Routes = [
   { path: 'students', component: StudentsComponent },
+  { path: 'students/:id/edit', component: AddStudentComponent },
+  { path: 'students/:id', component: StudentDetailsComponent },
   { path: 'add-student', component: AddStudentComponent },
   { path: 'student-details', component: StudentDetailsComponent },
   { path: 'settings', component: SubjectImportanceComponent },
