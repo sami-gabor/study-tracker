@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentsSetvice } from '../students.service';
+import { ImportanceService } from '../importance.service';
 
 
 interface Student {
@@ -23,9 +24,10 @@ interface Student {
 })
 export class AddStudentComponent implements OnInit {
   studentSubjects: string[]; // add interface
-  newStudent: any;
+  newStudent: Student;
 
   constructor(
+    private importanceSercice: ImportanceService,
     private route: ActivatedRoute,
     private router: Router,
     private studentsService: StudentsSetvice
@@ -50,7 +52,7 @@ export class AddStudentComponent implements OnInit {
       }
     }
 
-    this.studentSubjects = ['math', 'english', 'biology'];
+    this.studentSubjects = Object.keys(this.importanceSercice.percentages);
   }
 
   onSaveDetails() {
