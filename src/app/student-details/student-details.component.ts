@@ -1,8 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StudentsSetvice } from '../students.service';
 
 import { Student } from '../../interfaces/student.interface';
-import { ImportanceService } from '../importance.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -12,15 +11,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
-  // @Output() cancelDetails = new EventEmitter<void>();
   currentStudent: Student;
   currentStudentGrades = [];
 
-  // studentSubjects: string[]
-
   constructor(
     private studentsService: StudentsSetvice, 
-    private importanceService: ImportanceService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -28,20 +23,7 @@ export class StudentDetailsComponent implements OnInit {
   ngOnInit(): void {
     const studentId = this.route.snapshot.paramMap.get('id');
     this.currentStudent = this.studentsService.getStudent(studentId);
-    // this.studentSubjects = Object.keys(this.importanceService.percentages);
     this.currentStudentGrades = Object.entries(this.currentStudent.grades);
-    console.log('studentId: ', studentId, this.currentStudentGrades);
-    
-  }
-
-  onClickSaveDetails() {
-    // this.studentsService.saveStudentDetails(this.currentStudent);
-    // this.studentsService.updateStudentsScore();
-    // this.cancelDetails.emit();
-  }
-
-  onClickCancelDetails() {
-    // this.cancelDetails.emit();
   }
 
   onEditDetails(id: string) {

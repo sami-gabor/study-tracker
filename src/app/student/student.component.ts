@@ -11,15 +11,13 @@ import { Student } from '../../interfaces/student.interface';
 })
 export class StudentComponent implements OnInit {
   @Input() student: Student;
-  @Input() importancePercentages: any;
-  @Output() detailsClicked = new EventEmitter<any>();
 
   constructor(private router: Router) { }
 
   ngOnInit(): void { }
 
-  onClickDetails(studentId: string) {
-    this.router.navigate(['/students', studentId]);
+  onClickDetails(id: string) {
+    this.router.navigate(['/students', id]);
   }
 
 }

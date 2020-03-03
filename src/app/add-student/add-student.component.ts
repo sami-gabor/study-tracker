@@ -12,9 +12,9 @@ import { Student } from '../../interfaces/student.interface';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
-  studentSubjects: string[]; // add interface
   newStudent: Student;
   existingStudent: boolean = false;
+  studentSubjects: string[];
 
   constructor(
     private importanceSercice: ImportanceService,

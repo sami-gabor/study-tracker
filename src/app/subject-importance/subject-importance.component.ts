@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ImportanceService } from '../importance.service';
 import { StudentsSetvice } from '../students.service';
 
@@ -11,7 +11,10 @@ export class SubjectImportanceComponent implements OnInit {
   subjects: { name: string, importance: number }[] = [];
   percentages: { math: number, english: number, biology: number };
 
-  constructor(private importanceService: ImportanceService, private studentsService: StudentsSetvice) { }
+  constructor(
+    private importanceService: ImportanceService, 
+    private studentsService: StudentsSetvice
+  ) { }
 
   ngOnInit(): void {
     this.percentages = this.importanceService.percentages;
@@ -19,8 +22,6 @@ export class SubjectImportanceComponent implements OnInit {
     for (let item in this.percentages) {
       this.subjects.push({ name: item, importance: this.percentages[item] })
     }
-
-
   }
 
   onChangeImportancePercentage(name: string, value: number) {
