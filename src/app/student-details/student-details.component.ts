@@ -15,7 +15,7 @@ export class StudentDetailsComponent implements OnInit {
   currentStudentGrades = [];
 
   constructor(
-    private studentsService: StudentsSetvice, 
+    private studentsService: StudentsSetvice,
     private route: ActivatedRoute,
     private router: Router
   ) { }

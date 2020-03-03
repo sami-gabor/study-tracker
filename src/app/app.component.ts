@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { StudentsSetvice } from './students.service';
 
 
 @Component({
@@ -9,22 +10,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title: string = 'study-tracker';
   settingsAreVisible: boolean = true;
-  currentStudent = null;
-  
 
+  constructor(private studentsService: StudentsSetvice) {}
+  
   onToggleSettings() {
     this.settingsAreVisible = !this.settingsAreVisible;
   }
 
-  onDetailsClicked(student) {
-    this.currentStudent = student;
-  }
-
-  onCancelDetails() {
-    this.currentStudent = null;
-  }
-
-  onDetails(student) { // emitted 2 times: app-student --> app-students --> app
-    this.currentStudent = student;
-  }
 }

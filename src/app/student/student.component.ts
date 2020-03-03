@@ -19,5 +19,4 @@ export class StudentComponent implements OnInit {
   onClickDetails(id: string) {
     this.router.navigate(['/students', id]);
   }
-
 }

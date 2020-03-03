@@ -54,7 +54,7 @@ export class AddStudentComponent implements OnInit {
       this.studentsService.addStudent(this.newStudent);
     }
 
-    this.router.navigate(['/students']);
+    this.router.navigate(['/']);
   }
 
   onCancelDetails() {

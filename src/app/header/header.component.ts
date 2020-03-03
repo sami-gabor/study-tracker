@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { StudentsSetvice } from '../students.service';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +8,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Output() toggleSettings = new EventEmitter<void>();
-  navbarOpen: boolean = false;
+  @Output() sortedBy: any = new EventEmitter<string>();
 
-  constructor() { }
+  navbarOpen: boolean = false;
+  sortDropdownOpen: boolean = false;
+
+  constructor(private studentsService: StudentsSetvice) { }
 
   ngOnInit(): void {}
 
@@ -19,5 +23,21 @@ export class HeaderComponent implements OnInit {
 
   onToggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
+  }
+
+  onToggleSortStudents() {
+    this.sortDropdownOpen = !this.sortDropdownOpen;
+  }
+
+  onSortByName() {
+    this.studentsService.sortStudentsByName();
+    this.sortDropdownOpen = !this.sortDropdownOpen;
+    this.sortedBy.emit('name');
+  }
+
+  onSortByScore() {
+    this.studentsService.sortStudentsByScore();
+    this.sortDropdownOpen = !this.sortDropdownOpen;
+    this.sortedBy.emit('score');
   }
 }

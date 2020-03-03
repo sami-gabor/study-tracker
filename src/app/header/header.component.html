@@ -19,7 +19,25 @@
       <li class="nav-item">
         <a class="nav-link"  routerLink="/settings" routerLinkActive="custom-active-link" (click)="onClickSettings()">Settings</a>
       </li>
-
     </ul>
+    <div class="dropdown mr-2">
+      <button 
+        class="btn btn-light dropdown-toggle" 
+        type="button" 
+        id="dropdownSortMenuButton" 
+        data-toggle="dropdown" 
+        aria-haspopup="true" 
+        aria-expanded="false"
+        (click)="onToggleSortStudents()"
+      > Sort Students </button>
+      <div 
+        class="dropdown-menu" 
+        aria-labelledby="dropdownSortMenuButton"
+        [ngClass]="sortDropdownOpen ? 'show' : ''"
+      >
+        <button class="dropdown-item" (click)="onSortByName()">By name</button>
+        <button class="dropdown-item" (click)="onSortByScore()">By score</button>
+      </div>
+    </div>
   </div>
 </nav>
