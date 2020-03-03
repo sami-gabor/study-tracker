@@ -1,9 +1,11 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable, OnInit, EventEmitter } from "@angular/core";
 import { ImportanceService } from './importance.service';
 import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class StudentsSetvice implements OnInit {
+  sortedBy = new EventEmitter<string>();
+  sortBy: string;
 
   students = [
     {
@@ -59,7 +61,13 @@ export class StudentsSetvice implements OnInit {
   constructor(
     private importanceService: ImportanceService,
     private router: Router
-  ) { }
+  ) {
+    this.sortedBy.subscribe(
+      (type: string) => {
+        this.sortBy = type;
+      }
+    )
+  }
 
 
   saveStudentDetails(updatedStudent) {
@@ -83,6 +91,7 @@ export class StudentsSetvice implements OnInit {
   addStudent(student) {
     student.score = this.calculateStudentScore(student.grades, this.importanceService.percentages);
     this.students.push(student);
+    this.sortStudents();
   }
 
   updateStudent(updatedStudent) {
@@ -94,10 +103,20 @@ export class StudentsSetvice implements OnInit {
       }
     }
 
+    this.sortStudents();
   }
 
   getStudent(id: string) {
     return this.students.filter((student) => student.id === id)[0];
+  }
+
+  sortStudents() {
+    if(this.sortBy === 'name') {
+      this.sortStudentsByName();
+    }
+    if(this.sortBy === 'score') {
+      this.sortStudentsByScore();
+    }
   }
 
   sortStudentsByName() {
@@ -113,13 +132,10 @@ export class StudentsSetvice implements OnInit {
         return 0;
       }
     });
-
-    // this.router.navigate(['/']); // force rerendering of app-students
   }
 
   sortStudentsByScore() {
     this.students.sort((studentA, studentB) => studentA.score - studentB.score);
-    // this.router.navigate(['/']); // force rerendering of app-students
   }
 
   ngOnInit() { }

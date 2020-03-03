@@ -8,7 +8,6 @@ import { StudentsSetvice } from '../students.service';
 })
 export class HeaderComponent implements OnInit {
   @Output() toggleSettings = new EventEmitter<void>();
-  @Output() sortedBy: any = new EventEmitter<string>();
 
   navbarOpen: boolean = false;
   sortDropdownOpen: boolean = false;
@@ -31,13 +30,13 @@ export class HeaderComponent implements OnInit {
 
   onSortByName() {
     this.studentsService.sortStudentsByName();
+    this.studentsService.sortedBy.emit('name');
     this.sortDropdownOpen = !this.sortDropdownOpen;
-    this.sortedBy.emit('name');
   }
 
   onSortByScore() {
     this.studentsService.sortStudentsByScore();
+    this.studentsService.sortedBy.emit('score');
     this.sortDropdownOpen = !this.sortDropdownOpen;
-    this.sortedBy.emit('score');
   }
 }

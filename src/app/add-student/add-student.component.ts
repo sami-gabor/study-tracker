@@ -47,7 +47,7 @@ export class AddStudentComponent implements OnInit {
     this.studentSubjects = Object.keys(this.importanceSercice.percentages);
   }
 
-  onSaveDetails() {
+  onSaveNewStudent() {
     if(this.existingStudent) {
       this.studentsService.updateStudent(this.newStudent);
     } else {
@@ -57,7 +57,7 @@ export class AddStudentComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  onCancelDetails() {
+  onCancelNewStudent() {
     this.router.navigate(['/']);
   }
 
