@@ -58,15 +58,8 @@ export class StudentsSetvice implements OnInit {
     }
   ];
 
-  constructor(
-    private importanceService: ImportanceService,
-    private router: Router
-  ) {
-    this.sortedBy.subscribe(
-      (type: string) => {
-        this.sortBy = type;
-      }
-    )
+  constructor(private importanceService: ImportanceService) {
+    this.sortedBy.subscribe((type: string) => this.sortBy = type);
   }
 
 
@@ -111,10 +104,10 @@ export class StudentsSetvice implements OnInit {
   }
 
   sortStudents() {
-    if(this.sortBy === 'name') {
+    if (this.sortBy === 'name') {
       this.sortStudentsByName();
     }
-    if(this.sortBy === 'score') {
+    if (this.sortBy === 'score') {
       this.sortStudentsByScore();
     }
   }

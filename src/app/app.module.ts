@@ -12,6 +12,8 @@ import { ScoreHighlightDirective } from './score-highlight.directive';
 import { StudentsComponent } from './students/students.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AddStudentComponent } from './add-student/add-student.component';
+import { ReverseStringPipe } from './reverse-string.pipe';
+import { SortByPipe } from './sort-by.pipe';
 
 
 const appRoutes: Routes = [
@@ -35,7 +37,9 @@ const appRoutes: Routes = [
     ScoreHighlightDirective,
     StudentsComponent,
     PageNotFoundComponent,
-    AddStudentComponent
+    AddStudentComponent,
+    ReverseStringPipe,
+    SortByPipe
   ],
   imports: [
     BrowserModule,

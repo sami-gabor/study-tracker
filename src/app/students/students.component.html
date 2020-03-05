@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row d-flex justify-content-around">
         <app-student
-            *ngFor="let student of students"
+            *ngFor="let student of students | sortBy:'name'"
             [student]="student"
         ></app-student>
     </div>
