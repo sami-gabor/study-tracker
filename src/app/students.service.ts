@@ -1,6 +1,7 @@
 import { Injectable, OnInit, EventEmitter } from "@angular/core";
+
 import { ImportanceService } from './importance.service';
-import { Router } from '@angular/router';
+import { FirebaseStudentsService } from './firebase-students.service';
 
 @Injectable({ providedIn: 'root' })
 export class StudentsSetvice implements OnInit {
@@ -58,7 +59,10 @@ export class StudentsSetvice implements OnInit {
     }
   ];
 
-  constructor(private importanceService: ImportanceService) {
+  constructor(
+    private importanceService: ImportanceService,
+    private firebaseStudentsService: FirebaseStudentsService
+  ) {
     this.sortedBy.subscribe((type: string) => this.sortBy = type);
   }
 
@@ -83,7 +87,7 @@ export class StudentsSetvice implements OnInit {
 
   addStudent(student) {
     student.score = this.calculateStudentScore(student.grades, this.importanceService.percentages);
-    this.students.push(student);
+    this.firebaseStudentsService.postStudent(student);
     this.sortStudents();
   }
 
