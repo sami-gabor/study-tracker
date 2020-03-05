@@ -1,4 +1,5 @@
 import { Component, DoCheck, OnInit, OnDestroy } from '@angular/core';
+import { StudentsSetvice } from './students.service';
 
 
 @Component({
@@ -61,5 +62,5 @@ export class AppComponent implements DoCheck, OnInit, OnDestroy {
     this.clearInactiveInterval();
     console.log('Logged out!');
   }
-  
+
 }

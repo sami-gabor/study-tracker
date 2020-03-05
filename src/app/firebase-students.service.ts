@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 import { Student } from 'src/interfaces/student.interface';
 
@@ -16,6 +17,24 @@ export class FirebaseStudentsService {
     ).subscribe(responseData => {
       console.log('Student added: ', responseData);
     });
+  }
+
+  fetchStudents() {
+    return this.http
+      .get('https://study-tracker-70e8b.firebaseio.com/students.json')
+      .pipe(
+        map(studentsData => {
+          const studentsArray: Student[] = [];
+
+          for (let key in studentsData) {
+            if (studentsData.hasOwnProperty(key)) {
+              studentsArray.push({ ...studentsData[key], id: key })
+            }
+          }
+
+          return studentsArray;
+        })
+      );
   }
 
 }

@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StudentsSetvice } from '../students.service';
 
 import { Student } from '../../interfaces/student.interface';
+import { FirebaseStudentsService } from '../firebase-students.service';
 
 
 @Component({
@@ -11,11 +12,17 @@ import { Student } from '../../interfaces/student.interface';
 })
 export class StudentsComponent implements OnInit {
   students: Student[];
-  
-  constructor(private studentsService: StudentsSetvice) { }
+
+  constructor(
+    private studentsService: StudentsSetvice,
+    private firebaseStudentsService: FirebaseStudentsService
+  ) { }
 
   ngOnInit(): void {
-    this.students = this.studentsService.students;
+    this.firebaseStudentsService.fetchStudents().subscribe(students => {
+      this.students = students;
+    });
+
     this.studentsService.updateStudentsScore();
   }
 
