@@ -3,6 +3,7 @@ import { StudentsSetvice } from '../students.service';
 
 import { Student } from '../../interfaces/student.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FirebaseStudentsService } from '../firebase-students.service';
 
 
 @Component({
@@ -11,19 +12,24 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
-  currentStudent: Student;
-  currentStudentGrades = [];
+  currentStudent: any; // change to Student
+  // currentStudentGrades = [];
 
   constructor(
     private studentsService: StudentsSetvice,
+    private firebaseStudentsService: FirebaseStudentsService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     const studentId = this.route.snapshot.paramMap.get('id');
-    this.currentStudent = this.studentsService.getStudent(studentId);
-    this.currentStudentGrades = Object.entries(this.currentStudent.grades);
+
+    this.firebaseStudentsService.fetchStudent(studentId).subscribe(student => {
+      this.currentStudent = student;
+    });
+    // this.currentStudent = this.studentsService.getStudent(studentId);
+    // this.currentStudentGrades = Object.entries(this.currentStudent.grades);
   }
 
   onEditDetails(id: string) {
@@ -35,4 +41,3 @@ export class StudentDetailsComponent implements OnInit {
   }
 
 }
-

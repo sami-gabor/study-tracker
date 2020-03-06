@@ -88,19 +88,20 @@ export class StudentsSetvice implements OnInit {
   addStudent(student) {
     student.score = this.calculateStudentScore(student.grades, this.importanceService.percentages);
     this.firebaseStudentsService.postStudent(student);
-    this.sortStudents();
+    // this.sortStudents();
   }
 
   updateStudent(updatedStudent) {
-    for (let i = 0; i < this.students.length; i++) {
-      if (this.students[i].id === updatedStudent.id) {
-        updatedStudent.score = this.calculateStudentScore(updatedStudent.grades, this.importanceService.percentages);
-        this.students[i] = updatedStudent;
-        break;
-      }
-    }
+    // for (let i = 0; i < this.students.length; i++) {
+    //   if (this.students[i].id === updatedStudent.id) {
+    //     updatedStudent.score = this.calculateStudentScore(updatedStudent.grades, this.importanceService.percentages);
+    //     this.students[i] = updatedStudent;
+    //     break;
+    //   }
+    // }
 
-    this.sortStudents();
+    // this.sortStudents();
+    this.firebaseStudentsService.updateStudent(updatedStudent);
   }
 
   getStudent(id: string) {

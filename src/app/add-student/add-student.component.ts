@@ -4,6 +4,7 @@ import { StudentsSetvice } from '../students.service';
 import { ImportanceService } from '../importance.service';
 
 import { Student } from '../../interfaces/student.interface';
+import { FirebaseStudentsService } from '../firebase-students.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Student } from '../../interfaces/student.interface';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
-  newStudent: Student;
+  newStudent: any; // change to Student
   existingStudent: boolean = false;
   studentSubjects: string[];
 
@@ -20,7 +21,8 @@ export class AddStudentComponent implements OnInit {
     private importanceSercice: ImportanceService,
     private route: ActivatedRoute,
     private router: Router,
-    private studentsService: StudentsSetvice
+    private studentsService: StudentsSetvice,
+    private firebaseStudentsService: FirebaseStudentsService
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +30,10 @@ export class AddStudentComponent implements OnInit {
     
     if(id) {
       this.existingStudent = true;
-      this.newStudent = this.studentsService.getStudent(id);
+      // this.newStudent = this.studentsService.getStudent(id);
+      this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
+        this.newStudent = student;
+      });
     } else {
       this.newStudent = {
         id: 'Enter id',
@@ -50,11 +55,14 @@ export class AddStudentComponent implements OnInit {
   onSaveNewStudent() {
     if(this.existingStudent) {
       this.studentsService.updateStudent(this.newStudent);
+      console.log('existing...');
+      
     } else {
+      console.log('not existing...');
       this.studentsService.addStudent(this.newStudent);
     }
 
-    this.router.navigate(['/']);
+    this.router.navigate(['/students']);
   }
 
   onCancelNewStudent() {

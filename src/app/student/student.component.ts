@@ -17,6 +17,8 @@ export class StudentComponent implements OnInit {
   ngOnInit(): void { }
 
   onClickDetails(id: string) {
+    console.log(id);
+    
     this.router.navigate(['/students', id]);
   }
 }

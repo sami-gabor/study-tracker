@@ -26,7 +26,7 @@ export class AppComponent implements DoCheck, OnInit, OnDestroy {
   }
 
   ngDoCheck() {
-    if(this.isLogged) {
+    if (this.isLogged) {
       this.clearInactiveInterval();
       this.setInactiveInterval();
     }
@@ -40,16 +40,16 @@ export class AppComponent implements DoCheck, OnInit, OnDestroy {
   ngOnDestroy() {
     this.logout();
   }
-  
+
   setInactiveInterval = () => {
     this.inactiveInterval = setInterval(() => {
       this.logout();
     }, this.autoLogoutMiliSeconds);
   }
-  
+
   clearInactiveInterval() {
     clearInterval(this.inactiveInterval);
-  }  
+  }
 
   login() {
     this.isLogged = true;
