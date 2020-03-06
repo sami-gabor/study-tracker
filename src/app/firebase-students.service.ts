@@ -28,13 +28,12 @@ export class FirebaseStudentsService {
       );
   }
 
-  fetchStudent(studentId: string) {
+  fetchStudent(id: string) {
     return this.http
-      .get(`https://study-tracker-70e8b.firebaseio.com/students/${studentId}.json`)
+      .get(`https://study-tracker-70e8b.firebaseio.com/students/${id}.json`)
       .pipe(
         map(studentData => {
-          const student = { ...studentData, id: studentId };
-          return student;
+          return { ...studentData, id };
         })
       );
   }

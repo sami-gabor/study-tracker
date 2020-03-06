@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ImportanceService } from '../importance.service';
 
-import { Student } from '../../interfaces/student.interface';
+import { ImportanceService } from '../importance.service';
 import { FirebaseStudentsService } from '../firebase-students.service';
+import { Student } from 'src/interfaces/student.interface';
 
 
 @Component({
@@ -25,15 +25,15 @@ export class AddStudentComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    
-    if(id) {
+
+    if (id) {
       this.existingStudent = true;
       this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
         this.newStudent = student;
       });
     } else {
       this.newStudent = {
-        id: 'Enter id',
+        id: '0',
         name: 'Enter name',
         photo: 'Enter url',
         grades: {
@@ -55,20 +55,16 @@ export class AddStudentComponent implements OnInit {
 
   onSaveNewStudent() {
     this.newStudent.score = this.calculateStudentScore(this.newStudent.grades, this.importanceService.percentages);
-    
-    if(this.existingStudent) {
+
+    if (this.existingStudent) {
       this.firebaseStudentsService.updateStudent(this.newStudent).subscribe(responseData => {
-        console.log('Student updated: ', responseData);
         this.router.navigate(['/students']);
       });
     } else {
       this.firebaseStudentsService.postStudent(this.newStudent).subscribe(responseData => {
-        console.log('Student added: ', responseData);
         this.router.navigate(['/students']);
       });
     }
-
-    
   }
 
   onCancelNewStudent() {

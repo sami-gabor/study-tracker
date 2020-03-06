@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Student } from 'src/interfaces/student.interface';
 
-import { Student } from '../../interfaces/student.interface';
 
 
 @Component({
@@ -17,8 +17,6 @@ export class StudentComponent implements OnInit {
   ngOnInit(): void { }
 
   onClickDetails(id: string) {
-    console.log(id);
-    
     this.router.navigate(['/students', id]);
   }
 }

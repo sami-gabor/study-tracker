@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentsSetvice } from '../students.service';
 
-import { Student } from '../../interfaces/student.interface';
+import { Student } from 'src/interfaces/student.interface';
 import { FirebaseStudentsService } from '../firebase-students.service';
 
 
@@ -21,10 +21,11 @@ export class StudentsComponent implements OnInit {
   ngOnInit(): void {
     this.firebaseStudentsService.fetchStudents().subscribe(students => {
       this.students = students;
+      this.studentsService.students = students;
       // TODO: | async , getter
-    });
 
-    this.studentsService.updateStudentsScore();
+      this.studentsService.sortStudents();
+    });
   }
 
 }

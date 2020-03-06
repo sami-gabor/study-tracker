@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { StudentsSetvice } from '../students.service';
-
-import { Student } from '../../interfaces/student.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { FirebaseStudentsService } from '../firebase-students.service';
+import { Student } from 'src/interfaces/student.interface';
 
 
 @Component({
@@ -13,23 +12,19 @@ import { FirebaseStudentsService } from '../firebase-students.service';
 })
 export class StudentDetailsComponent implements OnInit {
   currentStudent: any; // change to Student
-  // currentStudentGrades = [];
 
   constructor(
-    private studentsService: StudentsSetvice,
     private firebaseStudentsService: FirebaseStudentsService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    const studentId = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
 
-    this.firebaseStudentsService.fetchStudent(studentId).subscribe(student => {
+    this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
       this.currentStudent = student;
     });
-    // this.currentStudent = this.studentsService.getStudent(studentId);
-    // this.currentStudentGrades = Object.entries(this.currentStudent.grades);
   }
 
   onEditDetails(id: string) {
@@ -37,11 +32,10 @@ export class StudentDetailsComponent implements OnInit {
   }
 
   onDeleteDetails(id: string) {
-    const confirmation = confirm("Are you sure you want to delete student?");
+    const confirmation: boolean = confirm("Are you sure you want to delete student?");
 
     if(confirmation) {
       this.firebaseStudentsService.deleteStudent(id).subscribe(() => {
-        console.log('Student deleted!');
         this.router.navigate(['/']);
       });
     }

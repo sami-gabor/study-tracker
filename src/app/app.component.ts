@@ -21,10 +21,6 @@ export class AppComponent implements DoCheck, OnInit, OnDestroy {
 
   constructor() { }
 
-  onToggleSettings() {
-    this.settingsAreVisible = !this.settingsAreVisible;
-  }
-
   ngDoCheck() {
     if (this.isLogged) {
       this.clearInactiveInterval();
