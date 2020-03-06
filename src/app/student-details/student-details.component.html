@@ -1,6 +1,7 @@
 <div class="container d-flex justify-content-center">
     <div class="card m-4" style="width: 18rem;">
         <div class="card-body">
+            <!-- TODO: find a different solution and remove the ? -->
             <h5 class="card-title">Name: {{ currentStudent?.name }}</h5>
 
             <h6 class="card-title">ID: {{ currentStudent?.id }}</h6>
@@ -24,7 +25,8 @@
 
             <div class="d-flex justify-content-around mt-4">
                 <button class="btn btn-success" (click)="onEditDetails(currentStudent.id)">Edit</button>
-                <button class="btn btn-danger" (click)="onCancelDetails()">Cancel</button>
+                <button class="btn btn-danger" (click)="onDeleteDetails(currentStudent.id)">Delete</button>
+                <button class="btn btn-dark" (click)="onCancelDetails()">Cancel</button>
             </div>
         </div>
     </div>

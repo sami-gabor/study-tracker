@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StudentsSetvice } from '../students.service';
 import { ImportanceService } from '../importance.service';
 
 import { Student } from '../../interfaces/student.interface';
@@ -18,10 +17,9 @@ export class AddStudentComponent implements OnInit {
   studentSubjects: string[];
 
   constructor(
-    private importanceSercice: ImportanceService,
+    private importanceService: ImportanceService,
     private route: ActivatedRoute,
     private router: Router,
-    private studentsService: StudentsSetvice,
     private firebaseStudentsService: FirebaseStudentsService
   ) { }
 
@@ -30,7 +28,6 @@ export class AddStudentComponent implements OnInit {
     
     if(id) {
       this.existingStudent = true;
-      // this.newStudent = this.studentsService.getStudent(id);
       this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
         this.newStudent = student;
       });
@@ -49,20 +46,29 @@ export class AddStudentComponent implements OnInit {
       }
     }
 
-    this.studentSubjects = Object.keys(this.importanceSercice.percentages);
+    this.studentSubjects = Object.keys(this.importanceService.percentages);
+  }
+
+  private calculateStudentScore(grades, percentages) {
+    return (grades.math * percentages.math + grades.english * percentages.english + grades.biology * percentages.biology) / 10;
   }
 
   onSaveNewStudent() {
+    this.newStudent.score = this.calculateStudentScore(this.newStudent.grades, this.importanceService.percentages);
+    
     if(this.existingStudent) {
-      this.studentsService.updateStudent(this.newStudent);
-      console.log('existing...');
-      
+      this.firebaseStudentsService.updateStudent(this.newStudent).subscribe(responseData => {
+        console.log('Student updated: ', responseData);
+        this.router.navigate(['/students']);
+      });
     } else {
-      console.log('not existing...');
-      this.studentsService.addStudent(this.newStudent);
+      this.firebaseStudentsService.postStudent(this.newStudent).subscribe(responseData => {
+        console.log('Student added: ', responseData);
+        this.router.navigate(['/students']);
+      });
     }
 
-    this.router.navigate(['/students']);
+    
   }
 
   onCancelNewStudent() {

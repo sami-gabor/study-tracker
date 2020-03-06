@@ -18,43 +18,7 @@ export class StudentsSetvice implements OnInit {
         english: 6,
         biology: 7
       },
-      description: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-      score: 0
-    },
-    {
-      id: '1',
-      name: 'Bob',
-      photo: 'https://i.dlpng.com/static/png/6735047_preview.png',
-      grades: {
-        math: 8,
-        english: 10,
-        biology: 10
-      },
-      description: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-      score: 0
-    },
-    {
-      id: '2',
-      name: 'Chris',
-      photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRMDN5amwkCryLQud80Tv44HG330ZazirecmZAfY36CZsJo8I6O',
-      grades: {
-        math: 10,
-        english: 6,
-        biology: 7
-      },
-      description: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-      score: 0
-    },
-    {
-      id: '3',
-      name: 'Dave',
-      photo: 'https://pngimage.net/wp-content/uploads/2018/06/graduate-student-png-2.png',
-      grades: {
-        math: 9,
-        english: 5,
-        biology: 3
-      },
-      description: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
+      description: 'Alice description goes here...',
       score: 0
     }
   ];
@@ -101,6 +65,7 @@ export class StudentsSetvice implements OnInit {
     // }
 
     // this.sortStudents();
+    updatedStudent.score = this.calculateStudentScore(updatedStudent.grades, this.importanceService.percentages);
     this.firebaseStudentsService.updateStudent(updatedStudent);
   }
 

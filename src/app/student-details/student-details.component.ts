@@ -36,6 +36,17 @@ export class StudentDetailsComponent implements OnInit {
     this.router.navigate(['/students', id, 'edit']);
   }
 
+  onDeleteDetails(id: string) {
+    const confirmation = confirm("Are you sure you want to delete student?");
+
+    if(confirmation) {
+      this.firebaseStudentsService.deleteStudent(id).subscribe(() => {
+        console.log('Student deleted!');
+        this.router.navigate(['/']);
+      });
+    }
+  }
+
   onCancelDetails() {
     this.router.navigate(['/students']);
   }

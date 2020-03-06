@@ -40,21 +40,23 @@ export class FirebaseStudentsService {
   }
 
   postStudent(student: Student) {
-    this.http.post(
+    return this.http.post(
       'https://study-tracker-70e8b.firebaseio.com/students.json',
       student
-    ).subscribe(responseData => {
-      console.log('Student added: ', responseData);
-    });
+    );
   }
 
   updateStudent(student: Student) {
-    this.http.put(
+    return this.http.put(
       `https://study-tracker-70e8b.firebaseio.com/students/${student.id}.json`,
       student
-    ).subscribe(responseData => {
-      console.log('Student updated: ', responseData);
-    });
+    );
+  }
+
+  deleteStudent(id: string) {
+    return this.http.delete(
+      `https://study-tracker-70e8b.firebaseio.com/students/${id}.json`
+    );
   }
 
 }

@@ -21,7 +21,7 @@ export class StudentsComponent implements OnInit {
   ngOnInit(): void {
     this.firebaseStudentsService.fetchStudents().subscribe(students => {
       this.students = students;
-      // TODO: | async
+      // TODO: | async , getter
     });
 
     this.studentsService.updateStudentsScore();
