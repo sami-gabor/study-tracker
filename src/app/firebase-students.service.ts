@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
@@ -12,11 +12,14 @@ export class FirebaseStudentsService {
 
   fetchStudents() {
     return this.http
-      .get('https://study-tracker-70e8b.firebaseio.com/students.json')
+      .get(
+        'https://study-tracker-70e8b.firebaseio.com/students.json',
+        {
+          params: new HttpParams().set('print', 'pretty')
+        }
+      )
       .pipe(
         map(studentsData => {
-          console.log(studentsData);
-          
           const studentsArray: Student[] = [];
 
           for (let key in studentsData) {
