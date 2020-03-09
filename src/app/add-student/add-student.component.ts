@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ImportanceService } from '../importance.service';
 import { FirebaseStudentsService } from '../firebase-students.service';
 import { Student } from 'src/interfaces/student.interface';
+import { StudentsSetvice } from '../students.service';
 
 
 @Component({
@@ -17,9 +18,10 @@ export class AddStudentComponent implements OnInit {
   studentSubjects: string[];
 
   constructor(
-    private importanceService: ImportanceService,
     private route: ActivatedRoute,
     private router: Router,
+    private importanceService: ImportanceService,
+    private studentsService: StudentsSetvice,
     private firebaseStudentsService: FirebaseStudentsService
   ) { }
 
@@ -49,12 +51,8 @@ export class AddStudentComponent implements OnInit {
     this.studentSubjects = Object.keys(this.importanceService.percentages);
   }
 
-  private calculateStudentScore(grades, percentages) {
-    return (grades.math * percentages.math + grades.english * percentages.english + grades.biology * percentages.biology) / 10;
-  }
-
   onSaveNewStudent() {
-    this.newStudent.score = this.calculateStudentScore(this.newStudent.grades, this.importanceService.percentages);
+    this.newStudent.score = this.studentsService.calculateStudentScore(this.newStudent.grades, this.importanceService.percentages);
 
     if (this.existingStudent) {
       this.firebaseStudentsService.updateStudent(this.newStudent).subscribe(responseData => {
@@ -62,6 +60,9 @@ export class AddStudentComponent implements OnInit {
       });
     } else {
       this.firebaseStudentsService.postStudent(this.newStudent).subscribe(responseData => {
+        this.firebaseStudentsService.updateStudentId(Object.values(responseData)[0]).subscribe(response => {
+          console.log('Student id updated: ', response);
+        });
         this.router.navigate(['/students']);
       });
     }

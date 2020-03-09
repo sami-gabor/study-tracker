@@ -1,15 +1,18 @@
-import { Injectable, OnInit, EventEmitter } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 
 import { Student } from 'src/interfaces/student.interface';
+import { ImportanceService } from './importance.service';
+import { FirebaseStudentsService } from './firebase-students.service';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
-export class StudentsSetvice implements OnInit {
+export class StudentsSetvice {
   sortedBy = new EventEmitter<string>();
   sortBy: string;
 
   students: Student[];
 
-  constructor() {
+  constructor(private firebaseStudentsService: FirebaseStudentsService, private router: Router) {
     this.sortedBy.subscribe((type: string) => this.sortBy = type);
   }
 
@@ -40,5 +43,18 @@ export class StudentsSetvice implements OnInit {
     if(this.sortBy === 'score') this.sortStudentsByScore();
   }
 
-  ngOnInit() { }
+  calculateStudentScore(grades, percentages) {
+    return (grades.math * percentages.math + grades.english * percentages.english + grades.biology * percentages.biology) / 10;
+  }
+
+  updateStudentsScore(percentages) {
+    this.students.forEach((student: Student) => {
+      student.score = this.calculateStudentScore(student.grades, percentages);
+    });
+
+    this.firebaseStudentsService.updateAllStudents(this.students).subscribe((response) => {
+      this.router.navigate(['/']);
+    });
+  }
+
 }

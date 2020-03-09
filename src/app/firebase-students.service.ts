@@ -16,7 +16,7 @@ export class FirebaseStudentsService {
       .pipe(
         map(studentsData => {
           const studentsArray: Student[] = [];
-          
+
           for (let key in studentsData) {
             if (studentsData.hasOwnProperty(key)) {
               studentsArray.push({ ...studentsData[key], id: key });
@@ -52,10 +52,24 @@ export class FirebaseStudentsService {
     );
   }
 
+  updateStudentId(studentId: string) {
+    return this.http.patch(
+      `https://study-tracker-70e8b.firebaseio.com/students/${studentId}/.json`,
+      { id: studentId }
+    );
+  }
+
+  updateAllStudents(students: Student[]) {
+    return this.http.put(
+      `https://study-tracker-70e8b.firebaseio.com/students.json`,
+      students
+    );
+  }
+
   deleteStudent(id: string) {
     return this.http.delete(
       `https://study-tracker-70e8b.firebaseio.com/students/${id}.json`
     );
   }
-
+  
 }
