@@ -15,7 +15,7 @@ import { StudentsSetvice } from '../students.service';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
-  private _newStudent: Student;
+  private _newStudent: Student; // change to Student
   existingStudent: boolean = false;
   studentSubjects: string[];
   isLoading: boolean;
@@ -38,17 +38,32 @@ export class AddStudentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
-    this.ngxService.start();
-    
     const id = this.route.snapshot.paramMap.get('id');
 
-    this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
-      this.newStudent = student;
+    if (id) {
+      this.isLoading = true;
+      this.ngxService.start();
+      this.existingStudent = true;
 
-      this.isLoading = false;
-      this.ngxService.stop();
-    });
+      this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
+        this.newStudent = student;
+        this.isLoading = false;
+        this.ngxService.stop();
+      });
+    } else {
+      this.newStudent = {
+        id: '0',
+        name: 'Enter name',
+        photo: 'Enter url',
+        grades: {
+          math: 0,
+          english: 0,
+          biology: 0
+        },
+        description: 'Enter description',
+        score: 0
+      }
+    }
 
     this.studentSubjects = Object.keys(this.importanceService.percentages);
   }
