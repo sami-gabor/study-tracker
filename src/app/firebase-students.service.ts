@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
@@ -15,6 +15,7 @@ export class FirebaseStudentsService {
       .get(
         'https://study-tracker-70e8b.firebaseio.com/students.json',
         {
+          headers: new HttpHeaders({'Custom-Header-Name': 'Custom-Header-Type'}),
           params: new HttpParams().set('print', 'pretty')
         }
       )
