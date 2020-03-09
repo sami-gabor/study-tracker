@@ -49,9 +49,9 @@ export class SubjectImportanceComponent implements OnInit, OnDestroy {
 
   onImportanceSave() {
     this.studentsService.updateStudentsScore(this.importanceService.percentages);
-    
+
     this.firebaseStudentsService.updateImportancePercentages(this.importanceService.percentages).subscribe(responseData => {
-      console.log('Importance percentages updated: ', responseData);
+      // console.log('Importance percentages updated: ', responseData);
     });
   }
 

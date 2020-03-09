@@ -50,13 +50,13 @@ export class AppComponent implements DoCheck, OnInit, OnDestroy {
   login() {
     this.isLogged = true;
     this.setInactiveInterval();
-    console.log('Logged in!');
+    // console.log('Logged in!');
   }
 
   logout() {
     this.isLogged = false;
     this.clearInactiveInterval();
-    console.log('Logged out!');
+    // console.log('Logged out!');
   }
 
 }
