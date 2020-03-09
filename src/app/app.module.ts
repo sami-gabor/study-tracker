@@ -16,6 +16,7 @@ import { AddStudentComponent } from './add-student/add-student.component';
 import { ReverseStringPipe } from './reverse-string.pipe';
 import { SortByPipe } from './sort-by.pipe';
 import { AuthInterceptorService } from './auth-interceptor.service';
+import { LoggingInterceptorService } from './logging-interceptor.service';
 
 
 const appRoutes: Routes = [
@@ -49,11 +50,18 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptorService,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
