@@ -15,6 +15,8 @@ export class FirebaseStudentsService {
       .get('https://study-tracker-70e8b.firebaseio.com/students.json')
       .pipe(
         map(studentsData => {
+          console.log(studentsData);
+          
           const studentsArray: Student[] = [];
 
           for (let key in studentsData) {
@@ -71,5 +73,31 @@ export class FirebaseStudentsService {
       `https://study-tracker-70e8b.firebaseio.com/students/${id}.json`
     );
   }
-  
+
+  fetchImportancePercentages() {
+    return this.http
+      .get('https://study-tracker-70e8b.firebaseio.com/importance-percentages.json')
+      .pipe(
+        map(percentageData => {
+          let percentages: any = {};
+          const entries = Object.entries(percentageData);
+
+          for (let entry in entries) {
+            const subject = entries[entry][0];
+            const grade = entries[entry][1];
+            percentages[subject] = grade;
+          }
+          
+          return percentages;
+        })
+      );
+  }
+
+  updateImportancePercentages(percenteges) {
+    return this.http.put(
+      `https://study-tracker-70e8b.firebaseio.com/importance-percentages.json`,
+      percenteges
+    );
+  }
+
 }

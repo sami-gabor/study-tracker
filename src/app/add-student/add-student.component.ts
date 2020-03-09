@@ -52,20 +52,22 @@ export class AddStudentComponent implements OnInit {
   }
 
   onSaveNewStudent() {
-    this.newStudent.score = this.studentsService.calculateStudentScore(this.newStudent.grades, this.importanceService.percentages);
+    this.firebaseStudentsService.fetchImportancePercentages().subscribe(percentages => {
+      this.newStudent.score = this.studentsService.calculateStudentScore(this.newStudent.grades, percentages);
 
-    if (this.existingStudent) {
-      this.firebaseStudentsService.updateStudent(this.newStudent).subscribe(responseData => {
-        this.router.navigate(['/students']);
-      });
-    } else {
-      this.firebaseStudentsService.postStudent(this.newStudent).subscribe(responseData => {
-        this.firebaseStudentsService.updateStudentId(Object.values(responseData)[0]).subscribe(response => {
-          console.log('Student id updated: ', response);
+      if (this.existingStudent) {
+        this.firebaseStudentsService.updateStudent(this.newStudent).subscribe(responseData => {
+          this.router.navigate(['/students']);
         });
-        this.router.navigate(['/students']);
-      });
-    }
+      } else {
+        this.firebaseStudentsService.postStudent(this.newStudent).subscribe(responseData => {
+          this.firebaseStudentsService.updateStudentId(Object.values(responseData)[0]).subscribe(response => {
+            console.log('Student id updated: ', response);
+          });
+          this.router.navigate(['/students']);
+        });
+      }
+    });
   }
 
   onCancelNewStudent() {

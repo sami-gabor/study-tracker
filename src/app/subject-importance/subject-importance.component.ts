@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ImportanceService } from '../importance.service';
 import { StudentsSetvice } from '../students.service';
-import { Router } from '@angular/router';
+import { FirebaseStudentsService } from '../firebase-students.service';
 
 @Component({
   selector: 'app-subject-importance',
@@ -14,17 +15,21 @@ export class SubjectImportanceComponent implements OnInit, OnDestroy {
   percentages: { math: number, english: number, biology: number };
 
   constructor(
-    private importanceService: ImportanceService, 
+    private firebaseStudentsService: FirebaseStudentsService,
+    private importanceService: ImportanceService,
     private studentsService: StudentsSetvice,
     private router: Router
-    ) { }
+  ) { }
 
   ngOnInit(): void {
-    this.percentages = this.importanceService.percentages;
-    
-    for (let item in this.percentages) {
-      this.subjects.push({ name: item, importance: this.percentages[item] })
-    }
+    this.firebaseStudentsService.fetchImportancePercentages().subscribe(percentages => {
+      this.percentages = percentages;
+
+      for (let item in this.percentages) {
+        this.subjects.push({ name: item, importance: this.percentages[item] });
+
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -43,7 +48,11 @@ export class SubjectImportanceComponent implements OnInit, OnDestroy {
   }
 
   onImportanceSave() {
-    this.studentsService.updateStudentsScore(this.percentages);
+    this.studentsService.updateStudentsScore(this.importanceService.percentages);
+    
+    this.firebaseStudentsService.updateImportancePercentages(this.importanceService.percentages).subscribe(responseData => {
+      console.log('Importance percentages updated: ', responseData);
+    });
   }
 
   onImportanceCancel() {
