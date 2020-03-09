@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes} from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { SubjectImportanceComponent } from './subject-importance/subject-importance.component';
@@ -48,7 +50,8 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    NgxUiLoaderModule
   ],
   providers: [
     {

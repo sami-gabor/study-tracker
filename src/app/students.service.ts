@@ -1,7 +1,6 @@
 import { Injectable, EventEmitter } from "@angular/core";
 
 import { Student } from 'src/interfaces/student.interface';
-import { ImportanceService } from './importance.service';
 import { FirebaseStudentsService } from './firebase-students.service';
 import { Router } from '@angular/router';
 

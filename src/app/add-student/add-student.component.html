@@ -1,6 +1,10 @@
 <div class="container d-flex justify-content-center">
     <div class="card m-4" style="width: 18rem;">
-        <div class="card-body">
+        <div class="card-body text-center" *ngIf="isLoading">
+            <ngx-ui-loader overlayColor="white"></ngx-ui-loader>
+        </div>
+
+        <div class="card-body" *ngIf="!isLoading">
             <div class="form-group">
                 <h5 class="card-title">Name: </h5>
                 <input 

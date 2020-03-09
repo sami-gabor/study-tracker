@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { Student } from 'src/interfaces/student.interface';
+import { Observable } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
@@ -34,9 +35,9 @@ export class FirebaseStudentsService {
       );
   }
 
-  fetchStudent(id: string) {
+  fetchStudent(id: string): Observable<Student> {
     return this.http
-      .get(`https://study-tracker-70e8b.firebaseio.com/students/${id}.json`)
+      .get<Student>(`https://study-tracker-70e8b.firebaseio.com/students/${id}.json`)
       .pipe(
         map(studentData => {
           return { ...studentData, id };

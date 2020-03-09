@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 import { ImportanceService } from '../importance.service';
 import { FirebaseStudentsService } from '../firebase-students.service';
 import { Student } from 'src/interfaces/student.interface';
@@ -13,11 +15,13 @@ import { StudentsSetvice } from '../students.service';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
-  newStudent: any; // change to Student
+  private _newStudent: Student;
   existingStudent: boolean = false;
   studentSubjects: string[];
+  isLoading: boolean;
 
   constructor(
+    private ngxService: NgxUiLoaderService,
     private route: ActivatedRoute,
     private router: Router,
     private importanceService: ImportanceService,
@@ -25,28 +29,26 @@ export class AddStudentComponent implements OnInit {
     private firebaseStudentsService: FirebaseStudentsService
   ) { }
 
+  get newStudent() {
+    return this._newStudent;
+  }
+
+  set newStudent(student) {
+    this._newStudent = student;
+  }
+
   ngOnInit(): void {
+    this.isLoading = true;
+    this.ngxService.start();
+    
     const id = this.route.snapshot.paramMap.get('id');
 
-    if (id) {
-      this.existingStudent = true;
-      this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
-        this.newStudent = student;
-      });
-    } else {
-      this.newStudent = {
-        id: '0',
-        name: 'Enter name',
-        photo: 'Enter url',
-        grades: {
-          math: 0,
-          english: 0,
-          biology: 0
-        },
-        description: 'Enter description',
-        score: 0
-      }
-    }
+    this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
+      this.newStudent = student;
+
+      this.isLoading = false;
+      this.ngxService.stop();
+    });
 
     this.studentSubjects = Object.keys(this.importanceService.percentages);
   }
