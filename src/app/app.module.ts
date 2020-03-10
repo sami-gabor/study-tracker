@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { NgxUiLoaderModule } from  'ngx-ui-loader';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -20,6 +20,7 @@ import { SortByPipe } from './sort-by.pipe';
 import { AuthInterceptorService } from './auth-interceptor.service';
 import { LoggingInterceptorService } from './logging-interceptor.service';
 import { CanDeactivateGuard } from './add-student/can-deactivate-guard.service';
+import { AuthComponent } from './auth/auth.component';
 
 
 const appRoutes: Routes = [
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
   { path: 'add-student', component: AddStudentComponent },
   { path: 'student-details', component: StudentDetailsComponent },
   { path: 'settings', component: SubjectImportanceComponent },
-  { path: '',   redirectTo: '/students', pathMatch: 'full' },
+  { path: 'auth', component: AuthComponent },
+  { path: '', redirectTo: '/students', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ]
 
@@ -45,7 +47,8 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     AddStudentComponent,
     ReverseStringPipe,
-    SortByPipe
+    SortByPipe,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
