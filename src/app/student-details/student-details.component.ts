@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { FirebaseStudentsService } from '../firebase-students.service';
 import { Student } from 'src/interfaces/student.interface';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 @Component({
@@ -11,19 +12,26 @@ import { Student } from 'src/interfaces/student.interface';
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
-  currentStudent: any; // change to Student
+  currentStudent: Student;
+  isLoading: boolean;
 
   constructor(
+    private ngxService: NgxUiLoaderService,
     private firebaseStudentsService: FirebaseStudentsService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
+    this.ngxService.start();
+
     const id = this.route.snapshot.paramMap.get('id');
 
     this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
       this.currentStudent = student;
+      this.isLoading = false;
+      this.ngxService.stop();
     });
   }
 
