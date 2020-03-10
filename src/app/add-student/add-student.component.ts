@@ -11,24 +11,26 @@ import { StudentsSetvice } from '../students.service';
 import { CanComponentDeactivate } from './can-deactivate-guard.service';
 
 
+const studentTemplate: Student = {
+  id: '0',
+  name: 'Enter name',
+  photo: 'Enter url',
+  grades: {
+    math: 0,
+    english: 0,
+    biology: 0
+  },
+  description: 'Enter description',
+  score: 0
+}
+
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit, CanComponentDeactivate {
-  student: Student = {
-    id: '0',
-    name: 'Enter name',
-    photo: 'Enter url',
-    grades: {
-      math: 0,
-      english: 0,
-      biology: 0
-    },
-    description: 'Enter description',
-    score: 0
-  }
+  student: Student = studentTemplate;
   private _newStudent: Student;
   existingStudent: boolean = false;
   studentSubjects: string[];
@@ -62,23 +64,12 @@ export class AddStudentComponent implements OnInit, CanComponentDeactivate {
 
       this.firebaseStudentsService.fetchStudent(id).subscribe(student => {
         this.newStudent = student;
-        this.student = Object.assign({}, { ...student }); // NOT deep copy => grades are passed 'by reference'
+        this.student = JSON.parse(JSON.stringify(student));
         this.isLoading = false;
         this.ngxService.stop();
       });
     } else {
-      this.newStudent = {
-        id: '0',
-        name: 'Enter name',
-        photo: 'Enter url',
-        grades: {
-          math: 0,
-          english: 0,
-          biology: 0
-        },
-        description: 'Enter description',
-        score: 0
-      }
+      this.newStudent = studentTemplate;
     }
 
     this.studentSubjects = Object.keys(this.importanceService.percentages);
@@ -111,11 +102,18 @@ export class AddStudentComponent implements OnInit, CanComponentDeactivate {
   }
 
   canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('can deactivate', this.newStudent.name !== this.student.name, this.newStudent.name, this.student.name);
+    const isDifferent = (newStudent: Student, student: Student): boolean => {
+      return (
+        newStudent.name !== student.name ||
+        newStudent.photo !== student.photo ||
+        newStudent.description !== student.description ||
+        newStudent.grades.math !== student.grades.math ||
+        newStudent.grades.english !== student.grades.english ||
+        newStudent.grades.biology !== student.grades.biology
+      );
+    }
 
-    if ((
-      this.newStudent.name !== this.student.name || this.newStudent.photo !== this.student.photo || this.newStudent.description !== this.student.description
-    ) && !this.changesSaved) {
+    if (isDifferent(this.newStudent, this.student) && !this.changesSaved) {
       return confirm('Discard changes and leave page?');
     } else {
       return true;
