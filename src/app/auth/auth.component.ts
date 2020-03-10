@@ -21,18 +21,18 @@ export class AuthComponent implements OnInit {
     const password = form.value.password;
     
     if(this.isLoginMode) {
-      // TODO: login
-    } else {
-      // this.authService.signup(email, password).subscribe(response => {
-      //   console.log(response);
-        
-      // });
-      this.authService.signup(email, password).subscribe(
-        resData => {
-          console.log('resData ', resData);
-        },
+      this.authService.signin(email, password).subscribe(
+        resData => console.log('signin resData ', resData),
         errorMessage => {
-          console.log('errorMessage: ', errorMessage);
+          console.log('signin errorMessage: ', errorMessage);
+          this.error = errorMessage;
+        }
+      );
+    } else {
+      this.authService.signup(email, password).subscribe(
+        resData => console.log('signup resData ', resData),
+        errorMessage => {
+          console.log('signup errorMessage: ', errorMessage);
           this.error = errorMessage;
         }
       );

@@ -9,8 +9,10 @@ interface AuthResponseData {
   email: string,
   refreshToken: string,
   expiresIn: string,
-  localId: string
+  localId: string,
+  registered?: boolean
 }
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -27,7 +29,19 @@ export class AuthService {
         returnSecureToken: true
       },
       {
-        headers: new HttpHeaders({'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT'})
+        headers: new HttpHeaders({'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST'})
+      }
+    );
+  }
+
+  signin(email: string, password: string) {
+    return this.http
+    .post<AuthResponseData>(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`,
+      {
+        email: email,
+        password: password,
+        returnSecureToken: true
       }
     );
   }
