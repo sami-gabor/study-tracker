@@ -4,20 +4,38 @@
             <div class="card card-signin my-5">
                 <div class="card-body">
                     <h5 class="card-title text-center">{{ isLoginMode ? 'Log in' : 'Sign up' }}</h5>
-                    <form class="form-signin">
+                    <form class="form-signin" (ngSubmit)="onSubmit(authForm)" #authForm="ngForm">
                         <div class="form-label-group">
-                            <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
-                                required autofocus>
+                            <input 
+                                type="email" 
+                                id="inputEmail" 
+                                class="form-control" 
+                                placeholder="Email address"
+                                required 
+                                autofocus
+                                email
+                                name="email"
+                                ngModel
+                            >
                         </div>
 
                         <div class="form-label-group">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Password"
-                                required>
+                            <input 
+                                type="password" 
+                                id="inputPassword" 
+                                class="form-control" 
+                                placeholder="Password"
+                                required
+                                name="password"
+                                minlength="6"
+                                ngModel
+                            >
                         </div>
 
                         <button 
                             class="btn btn-lg btn-success btn-block text-uppercase" 
                             type="submit"
+                            [disabled]="authForm.invalid"
                         >{{ isLoginMode ? 'Log in' : 'Sign up' }}</button>
                         <button 
                             class="btn btn-lg btn-primary btn-block text-uppercase" 
