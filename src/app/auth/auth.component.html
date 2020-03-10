@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-md-6 col-md-ofset-3">
             <div class="card card-signin my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Sign In</h5>
+                    <h5 class="card-title text-center">{{ isLoginMode ? 'Log in' : 'Sign up' }}</h5>
                     <form class="form-signin">
                         <div class="form-label-group">
                             <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
@@ -15,8 +15,15 @@
                                 required>
                         </div>
 
-                        <button class="btn btn-lg btn-success btn-block text-uppercase">Sign in</button>
-                        <button class="btn btn-lg btn-primary btn-block text-uppercase">Switch to sing up</button>
+                        <button 
+                            class="btn btn-lg btn-success btn-block text-uppercase" 
+                            type="submit"
+                        >{{ isLoginMode ? 'Log in' : 'Sign up' }}</button>
+                        <button 
+                            class="btn btn-lg btn-primary btn-block text-uppercase" 
+                            type="button"
+                            (click)="onSwitchMode()"
+                        >Switch to {{ isLoginMode ? 'Sign up' : 'Log in' }}</button>
                     </form>
                 </div>
             </div>
