@@ -19,11 +19,12 @@ import { ReverseStringPipe } from './reverse-string.pipe';
 import { SortByPipe } from './sort-by.pipe';
 import { AuthInterceptorService } from './auth-interceptor.service';
 import { LoggingInterceptorService } from './logging-interceptor.service';
+import { CanDeactivateGuard } from './add-student/can-deactivate-guard.service';
 
 
 const appRoutes: Routes = [
   { path: 'students', component: StudentsComponent },
-  { path: 'students/:id/edit', component: AddStudentComponent },
+  { path: 'students/:id/edit', component: AddStudentComponent, canDeactivate: [CanDeactivateGuard] },
   { path: 'students/:id', component: StudentDetailsComponent },
   { path: 'add-student', component: AddStudentComponent },
   { path: 'student-details', component: StudentDetailsComponent },
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: LoggingInterceptorService,
       multi: true
-    }
+    },
+    CanDeactivateGuard
   ],
   bootstrap: [AppComponent]
 })
