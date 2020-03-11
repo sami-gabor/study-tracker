@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { key } from './firebase-api-key';
 
 
-interface AuthResponseData {
+export interface AuthResponseData {
   idToken: string,
   email: string,
   refreshToken: string,
