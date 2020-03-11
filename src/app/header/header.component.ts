@@ -1,21 +1,33 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { StudentsSetvice } from '../students.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @Output() toggleSettings = new EventEmitter<void>();
 
   navbarOpen: boolean = false;
   sortDropdownOpen: boolean = false;
+  isAuthenticated: boolean = false;
+  private userSub: Subscription;
 
-  constructor(private studentsService: StudentsSetvice) { }
+  constructor(private studentsService: StudentsSetvice, private authService: AuthService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userSub = this.authService.user.subscribe(user => {
+      this.isAuthenticated = user ? true : false;
+    })
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
+  }
 
   onClickSettings() {
     this.toggleSettings.emit();
@@ -39,5 +51,9 @@ export class HeaderComponent implements OnInit {
     this.studentsService.sortStudentsByScore();
     this.studentsService.sortedBy.emit('score');
     this.sortDropdownOpen = !this.sortDropdownOpen;
+  }
+
+  onLogout() {
+    this.isAuthenticated = !this.isAuthenticated;
   }
 }

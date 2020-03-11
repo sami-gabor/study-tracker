@@ -12,19 +12,29 @@
         <a class="nav-link"  routerLink="/students" routerLinkActive=" active custom-active-link">Students</a>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="isAuthenticated">
         <a class="nav-link"  routerLink="/add-student" routerLinkActive="custom-active-link">AddStudent</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link"  routerLink="/settings" routerLinkActive="custom-active-link" (click)="onClickSettings()">Settings</a>
+        <a class="nav-link"
+          routerLink="/settings"
+          routerLinkActive="custom-active-link"
+          (click)="onClickSettings()"
+          *ngIf="isAuthenticated"
+        >Settings</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link"  routerLink="/auth" routerLinkActive="custom-active-link">Authenticate</a>
+        <a class="nav-link"  routerLink="/auth" routerLinkActive="custom-active-link"  *ngIf="!isAuthenticated">Authenticate</a>
       </li>
     </ul>
-    <div class="dropdown mr-2">
+
+    <div class="nav-item">
+      <a class="nav-link" style="color: black;"  routerLink="/auth" (click)="onLogout()" *ngIf="isAuthenticated">Logout</a>
+    </div>
+
+    <div class="dropdown mr-2" *ngIf="isAuthenticated">
       <button 
         class="btn btn-light dropdown-toggle" 
         type="button" 
