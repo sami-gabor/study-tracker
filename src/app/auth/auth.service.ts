@@ -25,39 +25,41 @@ export class AuthService {
 
   signup(email: string, password: string) {
     return this.http
-    .post<AuthResponseData>(
-      `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${key}`,
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true
-      },
-      {
-        headers: new HttpHeaders({'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST'})
-      }
-    )
-    .pipe(tap(resData => {
-      const expirationDate = new Date(new Date().getTime() + +resData.expiresIn * 1000);
-      const user = new User(resData.email, resData.localId, resData.idToken, expirationDate);
-      this.user.next(user);
-    }));
+      .post<AuthResponseData>(
+        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${key}`,
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true
+        },
+        {
+          headers: new HttpHeaders({ 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST' })
+        }
+      )
+      .pipe(tap(resData => {
+        this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
+      }));
   }
 
   signin(email: string, password: string) {
     return this.http
-    .post<AuthResponseData>(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`,
-      {
-        email: email,
-        password: password,
-        returnSecureToken: true
-      }
-    )
-    .pipe(tap(resData => {
-      const expirationDate = new Date(new Date().getTime() + +resData.expiresIn * 1000);
-      const user = new User(resData.email, resData.localId, resData.idToken, expirationDate);
-      this.user.next(user);
-    }));
+      .post<AuthResponseData>(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`,
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true
+        }
+      )
+      .pipe(tap(resData => {
+        this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
+      }));
   }
-  
+
+  private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const user = new User(email, id, token, expirationDate);
+    this.user.next(user);
+  }
+
 }
