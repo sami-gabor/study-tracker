@@ -79,7 +79,10 @@ export class FirebaseStudentsService {
   updateAllStudents(students: Student[]) {
     return this.http.put(
       `https://study-tracker-70e8b.firebaseio.com/students.json`,
-      students
+      students,
+      {
+        params: new HttpParams().set('auth', this.authService.token)
+      }
     );
   }
 
@@ -114,7 +117,10 @@ export class FirebaseStudentsService {
   updateImportancePercentages(percenteges) {
     return this.http.put(
       `https://study-tracker-70e8b.firebaseio.com/importance-percentages.json`,
-      percenteges
+      percenteges,
+      {
+        params: new HttpParams().set('auth', this.authService.token)
+      }
     );
   }
 
