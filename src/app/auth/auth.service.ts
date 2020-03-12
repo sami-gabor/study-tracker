@@ -20,6 +20,7 @@ export interface AuthResponseData {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new Subject<User>();
+  token: string = null;
 
   constructor(private http: HttpClient) { }
 
@@ -53,6 +54,7 @@ export class AuthService {
       )
       .pipe(tap(resData => {
         this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
+        this.token = resData.idToken;
       }));
   }
 

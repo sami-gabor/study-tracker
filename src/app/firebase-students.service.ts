@@ -4,12 +4,13 @@ import { map } from 'rxjs/operators';
 
 import { Student } from 'src/interfaces/student.interface';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth/auth.service';
 
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseStudentsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   fetchStudents() {
     return this.http
@@ -48,21 +49,30 @@ export class FirebaseStudentsService {
   postStudent(student: Student) {
     return this.http.post(
       'https://study-tracker-70e8b.firebaseio.com/students.json',
-      student
+      student,
+      {
+        params: new HttpParams().set('auth', this.authService.token)
+      }
     );
   }
 
   updateStudent(student: Student) {
     return this.http.put(
       `https://study-tracker-70e8b.firebaseio.com/students/${student.id}.json`,
-      student
+      student,
+      {
+        params: new HttpParams().set('auth', this.authService.token)
+      }
     );
   }
 
   updateStudentId(studentId: string) {
     return this.http.patch(
       `https://study-tracker-70e8b.firebaseio.com/students/${studentId}/.json`,
-      { id: studentId }
+      { id: studentId },
+      {
+        params: new HttpParams().set('auth', this.authService.token)
+      }
     );
   }
 
@@ -75,7 +85,10 @@ export class FirebaseStudentsService {
 
   deleteStudent(id: string) {
     return this.http.delete(
-      `https://study-tracker-70e8b.firebaseio.com/students/${id}.json`
+      `https://study-tracker-70e8b.firebaseio.com/students/${id}.json`,
+      {
+        params: new HttpParams().set('auth', this.authService.token)
+      }
     );
   }
 
