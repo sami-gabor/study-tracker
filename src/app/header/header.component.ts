@@ -55,5 +55,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.isAuthenticated = !this.isAuthenticated;
+    this.authService.token = null;
   }
 }
